@@ -1,0 +1,155 @@
+final project:
+
+- check development of:
+1. gun violence
+
+to look for connections:
+2. gun ownership, numer of guns sold
+3. development of social media usage
+4. income level
+5. cases of mental illnesses, rank of mental illness
+
+
+check for other facts if possible:
+- age of the people commiting gun violence
+
+
+(corr heatmap)
+make regression model looking for importance of each features
+Hypo being:
+high correlation between increase social media und gun violence
+
+forecasts timeseries for:
+1.social media users
+2. gun violence
+
+propose method to reduce thsi devlopemt:
+--> create safe mode on social media platforms enabling parents
+to block social media platforms from showing post including wepons
+
+- make deep learning and/or supervised learning model for detecting 
+if imag contains guns or not
+
+
+lets start with real plan:
+
+Check the final project presentation and evaluation criteria
+
+Ksneias steps day 1:
+
+1. Check the final project presentation and evaluation criteria
+2. Create a repo for final project
+3. Define business case and goal, and add this info to your slides
+4. Create Trello/Jira board and share with me
+5. Add project planning there and to the slide
+6. Define data sources and add to readme file the info about metadata
+7. Collect data
+8. Clean data
+9. EDA
+10.add cleaned data set to github
+
+links:
+final slides:  https://docs.google.com/presentation/d/1AIrdHc6rU_ai2PFAScywCgliVfc_apwiXwvT5iiHDo8/edit#slide=id.g11359ccd8d9_0_7
+evaluation criteria:  https://docs.google.com/spreadsheets/d/1aXHyqp2yClXhLzhDhOPzOO8e8Lxjv1LrTuw-TLydIZw/edit#gid=0
+
+links to data, data ideas etc:
+
+https://www.kaggle.com/datasets/jameslko/gun-violence-data
+
+https://www.kaggle.com/datasets/jboysen/state-firearms
+
+https://catalog.data.gov/dataset?q=Social+media&sort=score+desc%2C+name+asc&as_sfid=AAAAAAXSVS-VDjXNbMFAAG6kfnoYvjq0j2r9CBdNVLxiM3iBLoHN5WkOXXitsEuB0uDB-MmWJ8u-nLkv0hgoXX9CxJsJcnZGjxzobsNzqbSWo1BFaM28PyiR3W1tkMfj19Wlwlo%3D&as_fid=5d5b0264d62542279a8dfdbea8da3175f8b05434
+
+https://www.sciencedirect.com/science/article/pii/S2352340918302725
+
+https://catalog.data.gov/dataset?q=Mental+illness&sort=score+desc%2C+name+asc&as_sfid=AAAAAAXSVS-VDjXNbMFAAG6kfnoYvjq0j2r9CBdNVLxiM3iBLoHN5WkOXXitsEuB0uDB-MmWJ8u-nLkv0hgoXX9CxJsJcnZGjxzobsNzqbSWo1BFaM28PyiR3W1tkMfj19Wlwlo%3D&as_fid=5d5b0264d62542279a8dfdbea8da3175f8b05434
+
+https://www.atf.gov/resource-center/firearms-trace-data-2020
+
+https://data.world/infotanksmedia/technographics-data
+
+https://catalog.data.gov/dataset?q=City+characteristics&sort=score+desc%2C+name+asc&as_sfid=AAAAAAVOgiCLarlY40I-3y5aFI_p49H6bK0Mo12y49F2iY9IDCVTEqK_NYqHoZWYOY_fuzqw_CofYyu9MMvNqmHbXWWEwdutK71ENI61_gTMXvKMK07O-xQ8mNKSPSdBkmuWJk4%3D&as_fid=d473850de51375d651ba0f72c207b724fee4e9d1&ext_location=&ext_bbox=&ext_prev_extent=-99.84374999999999%2C39.90973623453719%2C-99.84374999999999%2C39.90973623453719
+
+https://data-flair.training/blogs/artificial-intelligence-project-ideas/
+
+https://catalog.data.gov/dataset?q=Gun+background+checks&sort=score+desc%2C+name+asc&ext_location=&ext_bbox=&ext_prev_extent=-99.84374999999999%2C39.90973623453719%2C-99.84374999999999%2C39.90973623453719&page=1
+
+https://data-flair.training/blogs/machine-learning-project-ideas/amp/
+
+
+
+
+factors decided on:
+mentall illness
+social media
+gun ownership
+gun laws
+gun licenses
+
+
+Hypos:
+
+negative correlation between laws and gun violece
+correlation between decreased licenses and violence
+mental illness positive correlation (induced by social media)
+gun ownership and lets see
+positive correlation between social media and everything bad
+
+steps:
+
+make data cleaning data prepping
+data EDA
+regression model, see impact of features on model
+
+Conclusions
+
+make deep learning model evaluating pictures, cleaning out the ones with weapons
+make a function
+
+extra info necessary:
+how to turn HTML ino pandas
+how to turn pictures into pixel arrays or find mutlitple arrays to combine
+
+
+Main Hypothesis:
+through an early confrontation with violence and wepons on social media,
+children in this generation are getting used to this kind of content and are therefor
+less inhibetet to grap to such methods when facing a problem, dispute, when struggeling with mental illness etc.
+
+
+do I have all data?
+gun violence     yes    uploaded
+gun laws     yes        uploaded
+gun licenses    yes      uploaded
+gun ownership   yes     uploaded
+mental illness   yes      uploaded but unusable
+social media    yes       uploaded
+(video games)
+(oher factors you want to include in analysis)
+
+
+
+## day 2 next steps
+
+- continue cleaning all data sets and make insights you can
+- prepare them as much as possible for later visualization
+- ask ksenia questions marked in lab
+- ask how to do time series for past
+
+- talk about expected relationship between variables and violence
+- visualize actual relationship
+
+(do this step now or after time series equalization)
+
+
+- make time series for all to recieve data for the same number of years
+- build regression model to see impact of each factor on violence
+
+- collect pictures, random regular ones and ones with weapons
+
+- construct deep learning model
+- make function
+
+
+
+
