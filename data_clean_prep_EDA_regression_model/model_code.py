@@ -47,7 +47,6 @@ data.shape
 
 
 # reshape image
-
 pic = np.array(Image.open(r"C:\Users\leube\Ironhack\Ironprojects\Module_3\final_project\the-dark-side-of-social-media-\images\gun_experiment.jpg").resize((100,100)))
 
 pic.shape
@@ -950,14 +949,6 @@ print(
 
 im = plt.imread(r"C:\Users\leube\Ironhack\Ironprojects\Module_3\final_project\the-dark-side-of-social-media-\images\image_1.jpg")
 
-def to_grayscale(im, weights = np.c_[0.2989, 0.5870, 0.1140]):
-    """
-    Transforms a colour image to a greyscale image by
-    taking the mean of the RGB values, weighted
-    by the matrix weights
-    """
-    tile = np.tile(weights, reps=(im.shape[0],im.shape[1],1))
-    return np.sum(tile * im, axis=2)
 
 def plti(im, h=8, **kwargs):
     """
@@ -969,6 +960,18 @@ def plti(im, h=8, **kwargs):
     plt.figure(figsize=(w,h))
     plt.imshow(im, interpolation="none", **kwargs)
     plt.axis('off')
+    
+    
+def to_grayscale(im, weights = np.c_[0.2989, 0.5870, 0.1140]):
+    """
+    Transforms a colour image to a greyscale image by
+    taking the mean of the RGB values, weighted
+    by the matrix weights
+    """
+    tile = np.tile(weights, reps=(im.shape[0],im.shape[1],1))
+    return np.sum(tile * im, axis=2)
+
+
 
 plti(im)
 
@@ -978,10 +981,6 @@ def simple_threshold(im, threshold=128):
 
 thresholds = [100,120,128,138,150]
 
-fig, axs = plt.subplots(nrows=1, ncols=len(thresholds), figsize=(20,5));
-gray_im = to_grayscale(im)
-
-plti(gray_im, cmap='Greys')
 
 def otsu_threshold(im):
 
@@ -1009,12 +1008,32 @@ def otsu_threshold(im):
 
 # try to ge the outlines of the immage
 
+fig, axs = plt.subplots(nrows=1, ncols=len(thresholds), figsize=(20,5));
+gray_im = to_grayscale(im)
+
+plti(gray_im, cmap='Greys')
+
 gray_im = to_grayscale(im)
 
 t = otsu_threshold(gray_im)
 plti(simple_threshold(gray_im, t), cmap='Greys')
 
 fig, axs = plt.subplots(nrows=1, ncols=3, figsize=(15,5))
+
+   
+    
+   
+from scipy.ndimage.interpolation import zoom
+im_small = zoom(im, (0.2,0.2,1))
+
+plti(im_small)
+
+
+
+
+
+def simple_threshold(im, threshold=128):
+    return ((im > threshold) * 255).astype("uint8")
 
 c_ims = []
 for c, ax in zip(range(3), axs):
@@ -1024,16 +1043,6 @@ for c, ax in zip(range(3), axs):
     ax.imshow(tmp_im, cmap='Greys')
     c_ims.append(tmp_im)
     ax.set_axis_off()
-   
-    
-   
-from scipy.ndimage.interpolation import zoom
-im_small = zoom(im, (0.2,0.2,1))
-
-plti(im_small)
-   
-    
- # use Kmeans to find color clusters  
     
     
 plti(c_ims[0] & c_ims[1] & c_ims[2], cmap='Greys')
@@ -1053,13 +1062,10 @@ out = np.asarray([cc[i] for i in km.labels_]).reshape((h,w,3))
 
 plti(out)
 
-dog = np.asarray([cc[i] if i == 1 else [0,0,0]
+nthcolor = np.asarray([cc[i] if i == 1 else [0,0,0]
                   for i in km.labels_]).reshape((h,w,3))
-
-plti(dog)
-
-
-dog
+plti(nthcolor)
+nthcolor
 
 
 # lets try this on another image
@@ -1461,7 +1467,8 @@ pic = np.array(Image.open(r"C:\Users\leube\Ironhack\Ironprojects\Module_3\final_
 pic.shape
 
 
-# lets try other rearranging pixel methods
+# lets try other rearranging pixel methods, only using kmeans with n cluster 2 instead of
+# only collecting the second most frequent color
 
 # the out result
 
@@ -1647,6 +1654,275 @@ val_loss, val_acc = model.evaluate(X_test, y_test)
 '''
 
 # lets increase the size of my data
+
+
+
+
+
+
+
+
+
+
+
+# lets make steps of the pixel rearrangement functions to further understand
+
+pic.shape
+
+
+pixel_counts = [np.sum(pic == i) for i in range(256)]
+
+len(pixel_counts)
+
+s_max = (0,-10)
+ss = []
+for threshold in range(256):
+
+    # update
+    w_0 = sum(pixel_counts[:threshold])
+    w_1 = sum(pixel_counts[threshold:])
+
+    mu_0 = sum([i * pixel_counts[i] for i in range(0,threshold)]) / w_0 if w_0 > 0 else 0       
+    mu_1 = sum([i * pixel_counts[i] for i in range(threshold, 256)]) / w_1 if w_1 > 0 else 0
+
+    # calculate 
+    s = w_0 * w_1 * (mu_0 - mu_1) ** 2
+    ss.append(s)
+
+    if s > s_max[1]:
+        s_max = (threshold, s)
+s_max[0]           
+
+
+t = otsu_threshold(gray_im)
+plti(simple_threshold(gray_im, t), cmap='Greys')
+
+
+print(pic)
+
+
+
+h,w = pic.shape[:2]
+pic.shape
+im_small_long = pic.reshape((h * w, 3))
+im_small_long
+im_small_long.shape
+im_small_wide = im_small_long.reshape((h,w,3))
+im_small_wide
+im_small_wide.shape
+
+km = KMeans(n_clusters=2)
+
+km.fit(im_small_long)
+
+cc = km.cluster_centers_.astype(np.uint8)
+cc
+out = np.asarray([cc[i] for i in km.labels_]).reshape((h,w,3))
+out
+
+plti(out)
+
+
+
+
+#####################################################################
+
+
+
+# run model with higher amount of data and use image preprocessing that gave most promissing results
+
+
+list_all_arrays = []
+for x in range(1,101):
+    linkstring=r"C:\Users\leube\Ironhack\Ironprojects\Module_3\final_project\the-dark-side-of-social-media-\images\image_" + str(x)+ ".jpg"
+    #print(linkstring)
+    
+    # resize
+    
+    pic = np.array(Image.open(linkstring).resize((250,250)))
+    #im_small = im_small = zoom(pic, (0.2,0.2,1))
+    # kmeans
+    h,w = pic.shape[:2]
+    im_small_long = pic.reshape((h * w, 3))
+    im_small_wide = im_small_long.reshape((h,w,3))
+
+    km = KMeans(n_clusters=2)
+
+    km.fit(im_small_long)
+
+    cc = km.cluster_centers_.astype(np.uint8)
+    out = np.asarray([cc[i] for i in km.labels_]).reshape((h,w,3))
+
+
+    #dog = np.asarray([cc[i] if i == 1 else [0,0,0]
+          #            for i in km.labels_]).reshape((h,w,3))
+
+    plti(out)
+    
+    # flatten
+    array2 = out.flatten()
+
+    #Memory occupied by array 2
+
+    #displaying the 1-D array
+    #print(array2)
+    list_all_arrays.append(array2)
+
+
+lists_in_list = [list(x) for x in list_all_arrays]
+lists_in_list
+finished_array = np.array(lists_in_list)
+finished_array
+
+
+finarrayfeaturesnewd = np.apply_along_axis(standardize,axis=0, arr=finished_array)
+finarrayfeaturesnewd
+
+# make an updated Y and produce new x y split
+
+len(Y)
+list11 = [1 for x in range(3)]
+list11
+list01 = [0 for x in range(30)]
+list12 = [1 for x in range(15)]
+list02 = [0 for x in range(5)]
+ylist = list(Y) + list11 + list01 + list12 + list02
+
+Y = np.array(ylist)
+
+Y
+
+X_train, X_test, y_train, y_test = train_test_split(finarrayfeaturesnewd, Y, test_size=0.20, random_state=43)
+
+# now lets run the saved model
+
+
+testmodel4newdata = tf.keras.models.load_model('pixel_change3.model')
+
+val_loss, val_acc = testmodel4newdata.evaluate(X_test, y_test)
+
+model = tf.keras.models.Sequential()
+model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
+model.add(tf.keras.layers.Dense(128, activation=tf.nn.sigmoid))
+model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
+model.add(tf.keras.layers.Dense(128, activation=tf.nn.sigmoid))
+model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
+model.add(tf.keras.layers.Dense(100, activation=tf.nn.sigmoid))
+model.add(tf.keras.layers.Dense(90, activation=tf.nn.relu))
+model.add(tf.keras.layers.Dense(70, activation=tf.nn.relu))
+model.add(tf.keras.layers.Dense(68, activation=tf.nn.softmax))
+
+tf.keras.optimizers.Adam(
+    learning_rate=0.3,
+    beta_1=0.9,
+    beta_2=0.999,
+    epsilon=1e-07,
+    amsgrad=False,
+    name='Adam',
+)
+
+
+model.compile(optimizer='Adam',
+             loss='sparse_categorical_crossentropy',
+             metrics=['accuracy'])
+model.fit(X_train,y_train, epochs=200)
+
+
+val_loss, val_acc = model.evaluate(X_test, y_test)
+
+'''
+
+val_loss, val_acc = model.evaluate(X_test, y_test)
+1/1 [==============================] - 0s 47ms/step - loss: 0.2959 - accuracy: 0.8500
+
+X_train, X_test, y_train, y_test = train_test_split(finarrayfeaturesnewd, Y, test_size=0.20, random_state=28)
+
+val_loss, val_acc = model.evaluate(X_test, y_test)
+1/1 [==============================] - 0s 289ms/step - loss: 0.4491 - accuracy: 0.9500
+
+X_train, X_test, y_train, y_test = train_test_split(finarrayfeaturesnewd, Y, test_size=0.20, random_state=24)
+
+val_loss, val_acc = model.evaluate(X_test, y_test)
+1/1 [==============================] - 0s 47ms/step - loss: 0.2300 - accuracy: 0.9000
+
+
+
+'''
+
+model.save('newdata.model')
+
+
+##########################################finished code####################################
+
+
+# making some visualizations for the presentation
+im = plt.imread(r"C:\Users\leube\Ironhack\Ironprojects\Module_3\final_project\the-dark-side-of-social-media-\images\image_8.jpg")
+
+
+gray_im = to_grayscale(im)
+
+plti(gray_im, cmap='Greys')
+
+t = otsu_threshold(gray_im)
+plti(simple_threshold(gray_im, t), cmap='Greys')
+
+fig, axs = plt.subplots(nrows=1, ncols=3, figsize=(15,5))
+
+c_ims = []
+for c, ax in zip(range(3), axs):
+    tmp_im = im[:,:,c]
+    t = otsu_threshold(tmp_im)
+    tmp_im = simple_threshold(tmp_im, t)
+    ax.imshow(tmp_im, cmap='Greys')
+    c_ims.append(tmp_im)
+    ax.set_axis_off()
+   
+plti(c_ims[0] & c_ims[1] & c_ims[2], cmap='Greys')
+ 
+   
+from scipy.ndimage.interpolation import zoom
+im_small = zoom(im, (0.2,0.2,1))
+
+#plti(im_small)
+   
+    
+ # use Kmeans to find color clusters  
+    
+    
+
+from sklearn.cluster import KMeans
+
+h,w = im.shape[:2]
+im_small_long = im.reshape((h * w, 3))
+im_small_wide = im_small_long.reshape((h,w,3))
+
+km = KMeans(n_clusters=2)
+
+km.fit(im_small_long)
+
+cc = km.cluster_centers_.astype(np.uint8)
+out = np.asarray([cc[i] for i in km.labels_]).reshape((h,w,3))
+
+plti(out)
+
+dog = np.asarray([cc[i] if i == 1 else [0,0,0]
+                  for i in km.labels_]).reshape((h,w,3))
+
+plti(dog)
+
+im = plt.imread(r"C:\Users\leube\Ironhack\Ironprojects\Module_3\final_project\the-dark-side-of-social-media-\images\image_51.jpg")
+
+
+plti(im)
+dog
+
+
+
+
+
+
+
+
 
 
 
