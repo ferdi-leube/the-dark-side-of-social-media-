@@ -51,11 +51,11 @@ I used the same source as for the previous dataset and collected the data from t
 The source for this dataset was: Our world in Data, giving yearly information about the percentage of patients per total population of different countries for various mental health disorders. 
 
 ## List of used data and links to sources
-- [Social_media_users_over_time] (https://data.world/wesgbrooks-testing/historical-internet-utilization/workspace/file?filename=users-by-social-media-platform.csv)
-- [Information_on_gun_violence] (https://www.kaggle.com/datasets/jameslko/gun-violence-data)
-- [Information_on_registered_guns] (https://data.world/dash/us-firearms-commerce-2015)
-- [Number_of_gun_licenses_processed] (https://data.world/dash/us-firearms-commerce-2015)
-- [New_mental_illness_data] (https://data.world/vizzup/mental-health-depression-disorder-data)
+- [Social_media users over time](https://data.world/wesgbrooks-testing/historical-internet-utilization/workspace/file?filename=users-by-social-media-platform.csv)
+- [Information on gun violence](https://www.kaggle.com/datasets/jameslko/gun-violence-data)
+- [Information on registered guns](https://data.world/dash/us-firearms-commerce-2015)
+- [Number of gun licenses processed](https://data.world/dash/us-firearms-commerce-2015)
+- [New mental illness data](https://data.world/vizzup/mental-health-depression-disorder-data)
 
 ## Deliverables
 
@@ -69,7 +69,7 @@ The source for this dataset was: Our world in Data, giving yearly information ab
 ## Links to deliverables and additional links
 
 [Repository](https://github.com/ferdi-leube/Descriptive-predictive-analysis-and-visualization-in-Tableau)  
-[Jira_Board] (https://trello.com/invite/b/fNTXRiYd/6d314e350060dc69a32ae1f08b933629/prj7)
+[Jira Board](https://trello.com/invite/b/fNTXRiYd/6d314e350060dc69a32ae1f08b933629/prj7)
 
 
 
