@@ -51,7 +51,7 @@ I used the same source as for the previous dataset and collected the data from t
 The source for this dataset was: Our world in Data, giving yearly information about the percentage of patients per total population of different countries for various mental health disorders. 
 
 ## List of used data and links to sources
-- [Social_media users over time](https://data.world/wesgbrooks-testing/historical-internet-utilization/workspace/file?filename=users-by-social-media-platform.csv)
+- [Social media users over time](https://data.world/wesgbrooks-testing/historical-internet-utilization/workspace/file?filename=users-by-social-media-platform.csv)
 - [Information on gun violence](https://www.kaggle.com/datasets/jameslko/gun-violence-data)
 - [Information on registered guns](https://data.world/dash/us-firearms-commerce-2015)
 - [Number of gun licenses processed](https://data.world/dash/us-firearms-commerce-2015)
